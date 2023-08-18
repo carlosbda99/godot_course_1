@@ -5,7 +5,7 @@ onready var player_sprite: Sprite = get_node("Texture")
 onready var wall_ray: RayCast2D = get_node("WallRay")
 
 var direction: Vector2
-var side: int = 1
+var side: int = -1
 var jump_count: int = 0
 var landing: bool = false
 var attacking: bool = false
@@ -43,12 +43,19 @@ func horizontal_move_env() -> void:
 func vertical_move_env() -> void:
 	if not can_track_action: return
 	
+	if position.y > 400:
+		position = Vector2.ZERO
+		
+	if position.x < 0:
+		position.x = 0
+	
 	if is_on_floor() or is_on_wall():
 		jump_count = 0
 	
 	if Input.is_action_just_pressed("ui_up") and jump_count < 2:
 		jump_count += 1
 		if close_wall() and not is_on_floor():
+			jump_count += 1
 			direction.y = wall_jump_force
 			direction.x += wall_impulse_force * side
 		else:
@@ -92,12 +99,12 @@ func defend() -> void:
 func gravity(delta: float) -> void:
 	if close_wall():
 		direction.y += delta * player_wall_gravity
-	
+
 		if direction.y >= player_wall_gravity:
 			direction.y = player_wall_gravity
 	else:
 		direction.y += delta * player_gravity
-		
+
 		if direction.y >= player_gravity:
 			direction.y = player_gravity
 		

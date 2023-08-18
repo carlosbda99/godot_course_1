@@ -28,22 +28,22 @@ func flip_position(direction: Vector2) -> void:
 		flip_h = false
 		suffix = "_right"
 		player.side = -1
-		player.direction = Vector2.ZERO
+		position = Vector2.ZERO
 		player.wall_ray.cast_to = Vector2(5.5, 0)
 		
 	if direction.x < 0:
 		flip_h = true
 		suffix = "_left"
 		player.side = 1
-		player.direction = Vector2(-2,0)
+		position = Vector2(-2,0)
 		player.wall_ray.cast_to = Vector2(-7.5, 0)
 		
 		
 func action_behavior() -> void:
-	#if player.close_wall():
-	#	animation.play("wall_slide")
-	#elif player.attacking:
-	if player.attacking:
+	if player.close_wall():
+		animation.play("wall_slide")
+	elif player.attacking:
+#	if player.attacking:
 		animation.play("attack" + suffix)
 	elif player.crouching and crouch_off:
 		animation.play("crouch")
