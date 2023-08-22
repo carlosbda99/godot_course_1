@@ -44,3 +44,4 @@ margin_bottom = 40.0
 texture = ExtResource( 5 )
 
 [node name="Mask" parent="." instance=ExtResource( 6 )]
+color = Color( 0.282353, 0.294118, 0.380392, 1 )
